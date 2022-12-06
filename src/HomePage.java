@@ -142,7 +142,7 @@ public class HomePage extends JFrame {
 
         add(formPanel, BorderLayout.NORTH);
 
-        setTitle("Login Form");
+        setTitle("Sign Up Form");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(400, 500);
         setMinimumSize(new Dimension(350, 450));
@@ -152,7 +152,7 @@ public class HomePage extends JFrame {
 
     public static void main(String[] args) {
         HomePage obj = new HomePage();
-        //obj.SignUp();
-        obj.SignIn();
+        obj.SignUp();
+        // obj.SignIn();
     }
 }
