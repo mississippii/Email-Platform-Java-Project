@@ -2,104 +2,40 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.swing.*;
 
+
 public class HomePage extends JFrame {
-    final private Font mainFont = new Font("celibrie", Font.BOLD, 18);
+    final private Font mainFont = new Font("", Font.BOLD, 18);
+
     JTextField tfFirstName ,tfLastName,tfEmail;
     JPasswordField pfpassword;
 
-
-    public void SignIn() {
-
-        /*********** Form**********************/
-
-        JLabel LoginForm = new JLabel("Login form", SwingConstants.CENTER);
-        LoginForm.setFont(mainFont);
-
-        JLabel Email = new JLabel("Email");
-        Email.setFont(mainFont);
-        tfEmail = new JTextField();
-        tfEmail.setFont(mainFont);
-
-        JLabel Password = new JLabel("Password");
-        Password.setFont(mainFont);
-        pfpassword = new JPasswordField();
-        pfpassword.setFont(mainFont);
-
-        JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(0, 1, 10, 10));
-        formPanel.add(LoginForm);
-        formPanel.add(Email);
-        formPanel.add(tfEmail);
-        formPanel.add(Password);
-        formPanel.add(pfpassword);
-
-        /******** Button ********/
-        JButton Loginbtn = new JButton("Login");
-        Loginbtn.setFont(mainFont);
-        Loginbtn.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
-                // String email = tfEmail.getText();
-                // String pass = String.valueOf(pfpassword.getPassword());
-                // User user = getAuthenticatedUser(email, pass);
-
-                // if (user != null) {
-                // MainFrame mainframe = new Mainframe();
-                // mainframe.initialize(user);
-                // dispose();
-                // }
-                // else {
-                // JOptionPane.showMessageDialog(HomePage.this, "Invalid Email or Password",
-                // "Try agin",
-                // JOptionPane.ERROR_MESSAGE);
-                // }
-
-            }
-
-        });
-
-        add(formPanel, BorderLayout.NORTH);
-
-        setTitle("Login Form");
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setSize(400, 500);
-        setMinimumSize(new Dimension(350, 450));
-        setLocationRelativeTo(null);
-        setVisible(true);
-    }
 
     public void SignUp() {
 
         /*********** Form **********************/
 
         JLabel RegisterForm = new JLabel("SignUp", SwingConstants.CENTER);
-        RegisterForm.setFont(mainFont);
 
         JLabel FirstName = new JLabel("First Name");
         FirstName.setFont(mainFont);
         tfFirstName = new JTextField();
-        tfFirstName.setFont(mainFont);
 
         JLabel LastName = new JLabel("Last Name");
         LastName.setFont(mainFont);
         tfLastName = new JTextField();
-        tfLastName.setFont(mainFont);
 
         JLabel Email = new JLabel("Email");
         Email.setFont(mainFont);
-
         tfEmail = new JTextField();
-        tfEmail.setFont(mainFont);
 
         JLabel Password = new JLabel("Password");
         Password.setFont(mainFont);
-
         pfpassword = new JPasswordField();
-        pfpassword.setFont(mainFont);
 
         JPanel formPanel = new JPanel();
         formPanel.setLayout(new GridLayout(0, 1, 10, 10));
@@ -114,28 +50,30 @@ public class HomePage extends JFrame {
         formPanel.add(pfpassword);
 
         /******** Button ********/
-        JButton Loginbtn = new JButton("Login");
-        Loginbtn.setFont(mainFont);
+        JButton Loginbtn = new JButton("Creat Account");
+
+        JButton cancel = new JButton("Cancel");
+
+        formPanel.add(Loginbtn);
+        formPanel.add(cancel);
+
         Loginbtn.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
-                // String email = tfEmail.getText();
-                // String pass = String.valueOf(pfpassword.getPassword());
-                // User user = getAuthenticatedUser(email, pass);
+                String Fname = tfFirstName.getText();
+                String Lname = tfLastName.getText();
+                String email = tfEmail.getText();
+                String pass = String.valueOf(pfpassword.getPassword());
 
-                // if (user != null) {
-                // MainFrame mainframe = new Mainframe();
-                // mainframe.initialize(user);
-                // dispose();
-                // }
-                // else {
-                // JOptionPane.showMessageDialog(HomePage.this, "Invalid Email or Password",
-                // "Try agin",
-                // JOptionPane.ERROR_MESSAGE);
-                // }
+                Boolean Pflag = PasswordValidation(pass);
+                boolean Eflag = EmailValidation(email);
 
+                if (Pflag && Eflag && Fname.length() > 0 && Lname.length() > 0) {
+                    Database db = new Database();
+                    db.SetData(Fname, Lname, email, pass);
+                }
             }
 
         });
@@ -150,9 +88,86 @@ public class HomePage extends JFrame {
         setVisible(true);
     }
 
+    public boolean PasswordValidation(String pass) {
+        if (pass.length() >= 8)
+            return true;
+        else {
+            JOptionPane.showMessageDialog(null, "Password contain at least 8 character",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+    }
+
+    public boolean EmailValidation(String email) {
+        String regex = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        if (matcher.matches() == false) {
+            JOptionPane.showMessageDialog(null, "Invalid Email",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        return matcher.matches();
+    }
+
+    public void SignIn() {
+
+        /*********** Form **********************/
+
+        JLabel LoginForm = new JLabel("Login form", SwingConstants.CENTER);
+        LoginForm.setFont(mainFont);
+
+        JLabel Email = new JLabel("Email");
+        Email.setFont(mainFont);
+    tfEmail = new JTextField();
+
+
+    JLabel Password = new JLabel("Password");
+    Password.setFont(mainFont);
+    pfpassword = new JPasswordField();
+
+
+    JPanel formPanel = new JPanel();
+    formPanel.setLayout(new GridLayout(0, 1, 10, 10));
+    formPanel.add(LoginForm);
+    formPanel.add(Email);
+    formPanel.add(tfEmail);
+    formPanel.add(Password);
+    formPanel.add(pfpassword);
+
+    /******** Button ********/
+    JButton Login = new JButton("Login");
+
+    JButton cancel = new JButton("Cancel");
+
+    formPanel.add(Login);
+    formPanel.add(cancel);
+
+    Login.addActionListener(new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // TODO Auto-generated method stub
+            String Lemail = tfEmail.getText();
+            String Lpass = String.valueOf(pfpassword.getPassword());
+
+            Database Dob = new Database();
+            Dob.varification(Lemail, Lpass);
+        }
+
+    });
+
+    add(formPanel, BorderLayout.NORTH);
+
+    setTitle("Login Form");
+    setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+    setSize(400, 500);
+    setMinimumSize(new Dimension(350, 450));
+    setLocationRelativeTo(null);
+    setVisible(true);
+    }
+
     public static void main(String[] args) {
         HomePage obj = new HomePage();
         obj.SignUp();
-        // obj.SignIn();
     }
 }
