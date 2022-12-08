@@ -6,9 +6,12 @@ public class NewsFeed extends JFrame {
     
     public void Inbox()
     {
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setSize(400, 500);
+        setMinimumSize(new Dimension(350, 450));
+        setLocationRelativeTo(null);
+        setSize(new Dimension(500, 600));
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(new Dimension(500,600));
     }
 
     public static void main(String[] args) {

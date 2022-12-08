@@ -46,7 +46,10 @@ public class Database {
                 record = true;
             }
             if (record == true) {
-                JOptionPane.showMessageDialog(null, "Valid Email");
+                HomePage objhm = new HomePage();
+                objhm.setVisible(false);
+                NewsFeed nfobj = new NewsFeed();
+                nfobj.setVisible(true);
             } 
             else {
                 JOptionPane.showMessageDialog(null, "Invalid Email or Password", "Warnig", JOptionPane.WARNING_MESSAGE);

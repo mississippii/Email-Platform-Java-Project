@@ -24,6 +24,7 @@ public class HomePage extends JFrame {
         JLabel FirstName = new JLabel("First Name");
         FirstName.setFont(mainFont);
         tfFirstName = new JTextField();
+        tfFirstName.setBounds(60, 60, 50, 60);
 
         JLabel LastName = new JLabel("Last Name");
         LastName.setFont(mainFont);
@@ -53,11 +54,11 @@ public class HomePage extends JFrame {
         JButton Loginbtn = new JButton("Creat Account");
         Loginbtn.setBounds(50, 20, 50, 40);
 
-        JButton cancel = new JButton("Cancel");
-        cancel.setBounds(50, 20, 50, 40);
+        JButton back = new JButton("Back");
+        back.setBounds(50, 20, 50, 40);
 
         formPanel.add(Loginbtn);
-        formPanel.add(cancel);
+        formPanel.add(back);
 
         Loginbtn.addActionListener(new ActionListener() {
 
@@ -160,7 +161,7 @@ public class HomePage extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             // TODO Auto-generated method stub
-            dispose();
+            setVisible(false);
             SignUp();
 
         }
@@ -189,10 +190,5 @@ public class HomePage extends JFrame {
     setMinimumSize(new Dimension(350, 450));
     setLocationRelativeTo(null);
     setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        HomePage obj = new HomePage();
-        obj.SignIn();
     }
 }
