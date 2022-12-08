@@ -15,28 +15,81 @@ public class HomePage extends JFrame {
     JPasswordField pfpassword;
 
 
+
     public void SignUp() {
 
         /*********** Form **********************/
 
-        JLabel RegisterForm = new JLabel("SignUp", SwingConstants.CENTER);
+        JLabel RegisterForm = new JLabel("SignUp", SwingConstants.CENTER); // title
 
         JLabel FirstName = new JLabel("First Name");
         FirstName.setFont(mainFont);
         tfFirstName = new JTextField();
-        tfFirstName.setBounds(60, 60, 50, 60);
+        tfFirstName.setBounds(100, 100, 150, 40);
+        tfFirstName.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String str = tfFirstName.getText();
+                if (!str.matches("[a-z A-Z]+")) {
+                    JOptionPane.showMessageDialog(null, "Name contain only english latter", "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+
+        });
 
         JLabel LastName = new JLabel("Last Name");
         LastName.setFont(mainFont);
         tfLastName = new JTextField();
+        tfLastName.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String str = tfFirstName.getText();
+                if (!str.matches("[a-z jA-Z]+")) {
+                    JOptionPane.showMessageDialog(null, "Name contain only english latter", "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+
+        });
 
         JLabel Email = new JLabel("Email");
         Email.setFont(mainFont);
         tfEmail = new JTextField();
+        tfEmail.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String regex = "^(.+)@(.+)$";
+                String str = tfEmail.getText();
+                Pattern pattern = Pattern.compile(regex);
+                Matcher matcher = pattern.matcher(str);
+                if (matcher.matches() == false) {
+                    JOptionPane.showMessageDialog(null, "Invalid Email",
+                            "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+
+            }
+
+        });
 
         JLabel Password = new JLabel("Password");
         Password.setFont(mainFont);
         pfpassword = new JPasswordField();
+        pfpassword.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String pass = String.valueOf(pfpassword.getPassword());
+                if (pass.length() < 8) {
+                    JOptionPane.showMessageDialog(null, "Password contain at least 8 character",
+                            "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+
+        });
 
         JPanel formPanel = new JPanel();
         formPanel.setLayout(new GridLayout(0, 1, 10, 10));
@@ -51,76 +104,41 @@ public class HomePage extends JFrame {
         formPanel.add(pfpassword);
 
         /******** Button ********/
-        JButton Loginbtn = new JButton("Creat Account");
-        Loginbtn.setBounds(50, 20, 50, 40);
+        JButton signup = new JButton("Creat Account");
+        signup.setBounds(50, 20, 50, 40);
 
         JButton back = new JButton("Back");
         back.setBounds(50, 20, 50, 40);
 
-        formPanel.add(Loginbtn);
+        formPanel.add(signup);
         formPanel.add(back);
 
-        Loginbtn.addActionListener(new ActionListener() {
+        signup.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
+
                 String Fname = tfFirstName.getText();
                 String Lname = tfLastName.getText();
                 String email = tfEmail.getText();
                 String pass = String.valueOf(pfpassword.getPassword());
 
-                Boolean Pflag = PasswordValidation(pass);
-                boolean Eflag = EmailValidation(email);
 
-                if (Fname.length() == 0 || Lname.length() == 0) {
-                    JOptionPane.showMessageDialog(null, "Name filed cann't blank",
-                            "warning", JOptionPane.WARNING_MESSAGE);
-                }
+                Database db = new Database();
+                db.SetData(Fname, Lname, email, pass);
 
-                if (Pflag && Eflag && Fname.length() > 0 && Lname.length() > 0) {
-                    Database db = new Database();
-                    db.SetData(Fname, Lname, email, pass);
-
-                }
             }
 
         });
 
         add(formPanel, BorderLayout.NORTH);
-
-        setTitle("Sign Up Form");
+        setTitle("Login Form");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(400, 500);
-        setMinimumSize(new Dimension(350, 450));
         setLocationRelativeTo(null);
         setVisible(true);
+
     }
-
-    public boolean PasswordValidation(String pass) {
-        if (pass.length() >= 8)
-            return true;
-        else {
-            JOptionPane.showMessageDialog(null, "Password contain at least 8 character",
-                    "Warning", JOptionPane.WARNING_MESSAGE);
-            return false;
-        }
-    }
-
-    public boolean EmailValidation(String email) {
-        String regex = "^(.+)@(.+)$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
-        if (matcher.matches() == false) {
-            JOptionPane.showMessageDialog(null, "Invalid Email",
-                    "Warning", JOptionPane.WARNING_MESSAGE);
-        }
-        return matcher.matches();
-    }
-
-
-
-
 
 
     public void SignIn() {
@@ -132,63 +150,79 @@ public class HomePage extends JFrame {
 
         JLabel Email = new JLabel("Email");
         Email.setFont(mainFont);
-    tfEmail = new JTextField();
+        tfEmail = new JTextField();
+        tfEmail.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String regex = "^(.+)@(.+)$";
+                String str = tfEmail.getText();
+                Pattern pattern = Pattern.compile(regex);
+                Matcher matcher = pattern.matcher(str);
+                if (matcher.matches() == false) {
+                    JOptionPane.showMessageDialog(null, "Invalid Email",
+                            "Warning", JOptionPane.WARNING_MESSAGE);
+                }
 
-    JLabel Password = new JLabel("Password");
-    Password.setFont(mainFont);
-    pfpassword = new JPasswordField();
+            }
 
+        });
 
-    JPanel formPanel = new JPanel();
-    formPanel.setLayout(new GridLayout(0, 1, 10, 10));
-    formPanel.add(LoginForm);
-    formPanel.add(Email);
-    formPanel.add(tfEmail);
-    formPanel.add(Password);
-    formPanel.add(pfpassword);
+        JLabel Password = new JLabel("Password");
+        Password.setFont(mainFont);
+        pfpassword = new JPasswordField();
+        pfpassword.addActionListener(new ActionListener() {
 
-    /******** Button ********/
-    JButton Login = new JButton("Login");
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String pass = String.valueOf(pfpassword.getPassword());
+                if (pass.length() < 8) {
+                    JOptionPane.showMessageDialog(null, "Password contain at least 8 character",
+                            "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            }
 
-    JButton SignUp = new JButton("Sign Up");
+        });
 
-    formPanel.add(Login);
-    formPanel.add(SignUp);
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new GridLayout(0, 1, 10, 10));
+        formPanel.add(LoginForm);
+        formPanel.add(Email);
+        formPanel.add(tfEmail);
+        formPanel.add(Password);
+        formPanel.add(pfpassword);
 
-    SignUp.addActionListener(new ActionListener() {
+        /******** Button ********/
+        JButton Login = new JButton("Login");
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // TODO Auto-generated method stub
-            setVisible(false);
-            SignUp();
+        JButton SignUp = new JButton("Sign Up");
 
-        }
+        formPanel.add(Login);
+        formPanel.add(SignUp);
 
-    });
+        SignUp.addActionListener(new ActionListener() {
 
-    Login.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SignUp();
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // TODO Auto-generated method stub
-            String Lemail = tfEmail.getText();
-            String Lpass = String.valueOf(pfpassword.getPassword());
+            }
 
-            Database Dob = new Database();
-            Dob.varification(Lemail, Lpass);
-        }
+        });
 
-    });
+        Login.addActionListener(new ActionListener() {
 
-    add(formPanel, BorderLayout.NORTH);
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String Lemail = tfEmail.getText();
+                String Lpass = String.valueOf(pfpassword.getPassword());
 
-    setTitle("Login Form");
-    setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-    setSize(400, 500);
-    setMinimumSize(new Dimension(350, 450));
-    setLocationRelativeTo(null);
-    setVisible(true);
+                Database Dob = new Database();
+                Dob.varification(Lemail, Lpass);
+            }
+
+        });
+
+        add(formPanel, BorderLayout.NORTH);
     }
 }
