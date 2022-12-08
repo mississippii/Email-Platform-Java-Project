@@ -1,5 +1,7 @@
 import java.sql.*;
 
+import javax.swing.*;
+
 public class Database {
 
     public void SetData(String Fname, String Lname, String email, String pass) {
@@ -17,10 +19,11 @@ public class Database {
             stmt.setString(3, email);
             stmt.setString(4, pass);
             stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, " Account created Successfully");
             conn.close();
 
         } catch (Exception e) {
-            System.out.println("Invalid email or password");
+            JOptionPane.showMessageDialog(null, " Account already exist");
 
         }
     }
@@ -30,10 +33,24 @@ public class Database {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/romatoomail", "root", "1234");
 
-            String que = "SELECT EmailId FROM emailuser WHERE EmailId=\""+email+"\" AND Pass=\""+pass+"\"";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(que);
-            System.out.println("Hello: "+rs.getString(que));
+            String que = "SELECT EmailId FROM emailuser WHERE EmailId=? AND Pass=?";
+
+            PreparedStatement stmt = conn.prepareStatement(que);
+
+            stmt.setString(1, email);
+            stmt.setString(2, pass);
+
+            ResultSet rs = stmt.executeQuery();
+            boolean record = false;
+            while (rs.next()) {
+                record = true;
+            }
+            if (record == true) {
+                JOptionPane.showMessageDialog(null, "Valid Email");
+            } 
+            else {
+                JOptionPane.showMessageDialog(null, "Invalid Email or Password", "Warnig", JOptionPane.WARNING_MESSAGE);
+            }
             conn.close();
 
         } catch (Exception e) {

@@ -51,8 +51,10 @@ public class HomePage extends JFrame {
 
         /******** Button ********/
         JButton Loginbtn = new JButton("Creat Account");
+        Loginbtn.setBounds(50, 20, 50, 40);
 
         JButton cancel = new JButton("Cancel");
+        cancel.setBounds(50, 20, 50, 40);
 
         formPanel.add(Loginbtn);
         formPanel.add(cancel);
@@ -70,9 +72,15 @@ public class HomePage extends JFrame {
                 Boolean Pflag = PasswordValidation(pass);
                 boolean Eflag = EmailValidation(email);
 
+                if (Fname.length() == 0 || Lname.length() == 0) {
+                    JOptionPane.showMessageDialog(null, "Name filed cann't blank",
+                            "warning", JOptionPane.WARNING_MESSAGE);
+                }
+
                 if (Pflag && Eflag && Fname.length() > 0 && Lname.length() > 0) {
                     Database db = new Database();
                     db.SetData(Fname, Lname, email, pass);
+
                 }
             }
 
@@ -109,6 +117,11 @@ public class HomePage extends JFrame {
         return matcher.matches();
     }
 
+
+
+
+
+
     public void SignIn() {
 
         /*********** Form **********************/
@@ -137,10 +150,22 @@ public class HomePage extends JFrame {
     /******** Button ********/
     JButton Login = new JButton("Login");
 
-    JButton cancel = new JButton("Cancel");
+    JButton SignUp = new JButton("Sign Up");
 
     formPanel.add(Login);
-    formPanel.add(cancel);
+    formPanel.add(SignUp);
+
+    SignUp.addActionListener(new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // TODO Auto-generated method stub
+            dispose();
+            SignUp();
+
+        }
+
+    });
 
     Login.addActionListener(new ActionListener() {
 
@@ -168,6 +193,6 @@ public class HomePage extends JFrame {
 
     public static void main(String[] args) {
         HomePage obj = new HomePage();
-        obj.SignUp();
+        obj.SignIn();
     }
 }
