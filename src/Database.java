@@ -46,7 +46,7 @@ public class Database {
                 record = true;
             }
             if (record == true) {
-                NewsFeed nfobj = new NewsFeed();
+                //NewsFeed nfobj = new NewsFeed();
             } 
             else {
                 JOptionPane.showMessageDialog(null, "Invalid Email or Password", "Warnig", JOptionPane.WARNING_MESSAGE);
