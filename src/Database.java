@@ -4,6 +4,8 @@ import javax.swing.*;
 
 public class Database {
 
+    public String EmailId;
+
     public void SetData(String Fname, String Lname, String email, String pass) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -20,6 +22,11 @@ public class Database {
             stmt.setString(4, pass);
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, " Account created Successfully");
+            Signup obj = new Signup();
+            obj.setVisible(false);
+            SignIn Sobj = new SignIn();
+            Sobj.setVisible(true);
+            Sobj.Login();
             conn.close();
 
         } catch (Exception e) {
@@ -46,9 +53,11 @@ public class Database {
                 record = true;
             }
             if (record == true) {
-                //NewsFeed nfobj = new NewsFeed();
-            } 
-            else {
+                EmailId = email;
+                NewsFeed nfobj = new NewsFeed();
+                nfobj.setVisible(true);
+                nfobj.Inbox();
+            } else {
                 JOptionPane.showMessageDialog(null, "Invalid Email or Password", "Warnig", JOptionPane.WARNING_MESSAGE);
             }
             conn.close();
@@ -56,6 +65,35 @@ public class Database {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+    
+    public void sendmail(String sendId,String receivedId,String body,String tag)
+    {
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            /* create connection */
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/romatoomail", "root", "1234");
+
+            String que = "INSERT INTO information(SendId,ReceivedId,MailBody,Tag) VALUES(?,?,?,?)";
+
+            PreparedStatement stmt = conn.prepareStatement(que);
+
+            stmt.setString(1, sendId);
+            stmt.setString(2, receivedId);
+            stmt.setString(3, body);
+            stmt.setString(4, tag);
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, " Account created Successfully");
+            Sendmail obj = new Sendmail();
+            obj.setVisible(false);
+            conn.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Sendig failed");
+
+        }        
 
     }
 

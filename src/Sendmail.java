@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale.Category;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,10 +12,14 @@ public class Sendmail extends JFrame {
 
     public void MessageBody() {
 
+
+
         JLabel Recipient = new JLabel("To");
         Recipient.setFont(mainFont);
         JTextField jtrecipient = new JTextField("Recipient");
-        jtrecipient.setBounds(50, 100, 200, 30);
+        jtrecipient.setBounds(0, 0, 500, 20);
+        add(Recipient);
+        add(jtrecipient);
 
         jtrecipient.addActionListener(new ActionListener() {
 
@@ -30,36 +35,64 @@ public class Sendmail extends JFrame {
                 }
             }
         });
+
+
+
+
         JLabel Subject = new JLabel("Subject");
         JTextField tSubject = new JTextField("Subject");
-        tSubject.setBounds(50, 100, 200, 30);
+        tSubject.setBounds(0, 20, 500, 20);
+        add(Subject);
+        add(tSubject);
 
-        JFrame textarea = new JFrame();
-        textarea.setBounds(0, 100, 200, 30);
 
-        JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(0, 1, 10, 10));
-        formPanel.add(Recipient);
-        formPanel.add(jtrecipient);
-        formPanel.add(Subject);
-        formPanel.add(tSubject);
-        formPanel.add(textarea);
-        add(formPanel, BorderLayout.NORTH);
+        String str[] = { "Primary", "Social", "Promotional", "Forum" };
+        JComboBox Categories = new JComboBox(str);
+        Categories.setBounds(10, 40, 100, 20);
+        add(Categories);
+
+
+
+        JTextArea textarea = new JTextArea("Message body");
+        textarea.setBounds(20,60,400,250);
+        add(textarea);
+
+
+
+
+        JButton send = new JButton("Send");
+        send.setFont(mainFont);
+        send.setBounds(0, 350, 100, 20);
+
+        send.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Database obj=new Database();
+                
+                String sendId =obj.EmailId;
+                String receivedId = jtrecipient.getText();
+                String body = textarea.getText();
+                String tag = "Praimary";
+
+                Database dbobj = new Database();
+                dbobj.sendmail(sendId, receivedId, body, tag);
+            }
+            
+        });
+
+        add(send);
 
         setTitle("New Massage");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(400, 500);
-        setLocationRelativeTo(null);
+        setLayout(null);
         setVisible(true);
     }
 
     public static void main(String[] args) {
 
-        // String str= "u1604090@yahoo.com";
-        // String regex = "^(.+)@(.+)$";
-        // Pattern pattern = Pattern.compile(regex);
-        // Matcher matcher = pattern.matcher(str);
-        // System.out.println(matcher.matches());
         Sendmail ob = new Sendmail();
         ob.MessageBody();
 
