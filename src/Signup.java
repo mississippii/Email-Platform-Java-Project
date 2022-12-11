@@ -15,16 +15,18 @@ public class Signup extends JFrame {
 
     public void Registration() {
 
-        /*********** Form **********************/
+        /*********** Registration Form **********************/
+
         SignIn Hobj = new SignIn();
         Hobj.setVisible(false);
-
-        JLabel RegisterForm = new JLabel("SignUp", SwingConstants.CENTER); // title
+        JLabel RgForm = new JLabel("Registration Form", SwingConstants.CENTER);
+        RgForm.setFont(mainFont);
+        add(RgForm);
 
         JLabel FirstName = new JLabel("First Name");
         FirstName.setFont(mainFont);
         tfFirstName = new JTextField();
-        tfFirstName.setBounds(100, 100, 150, 40);
+
         tfFirstName.addActionListener(new ActionListener() {
 
             @Override
@@ -90,27 +92,26 @@ public class Signup extends JFrame {
 
         });
 
-        JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(0, 1, 10, 10));
-        formPanel.add(RegisterForm);
-        formPanel.add(FirstName);
-        formPanel.add(tfFirstName);
-        formPanel.add(LastName);
-        formPanel.add(tfLastName);
-        formPanel.add(Email);
-        formPanel.add(tfEmail);
-        formPanel.add(Password);
-        formPanel.add(pfpassword);
+        JPanel RgPanel = new JPanel();
+        RgPanel.setLayout(new GridLayout(0, 1, 10, 10));
+        RgPanel.add(RgForm);
+        RgPanel.add(FirstName);
+        RgPanel.add(tfFirstName);
+        RgPanel.add(LastName);
+        RgPanel.add(tfLastName);
+        RgPanel.add(Email);
+        RgPanel.add(tfEmail);
+        RgPanel.add(Password);
+        RgPanel.add(pfpassword);
+        
+        add(RgPanel, BorderLayout.NORTH);
 
-        /******** Button ********/
-        JButton signup = new JButton("Creat Account");
-        signup.setBounds(50, 20, 50, 40);
+         /******** Create Button ********/
+         JButton signup = new JButton("Creat Account");
+        
 
-        JButton back = new JButton("Back");
-        back.setBounds(50, 20, 50, 40);
+         JButton back = new JButton("Back");
 
-        formPanel.add(signup);
-        formPanel.add(back);
 
         signup.addActionListener(new ActionListener() {
 
@@ -141,10 +142,18 @@ public class Signup extends JFrame {
 
         });
 
+        
+        JPanel btnpanel = new JPanel();
+        btnpanel.setLayout(new GridLayout(1, 2, 10, 0));
+        btnpanel.add(signup);
+        btnpanel.add(back);
+        add(btnpanel, BorderLayout.SOUTH);
+
         setTitle("Registration");
-        setSize(500, 600);
-        setLayout(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setSize(400, 500);
+        setMinimumSize(new Dimension(350, 450));
+        setLocationRelativeTo(null);
         setVisible(true);
 
     }

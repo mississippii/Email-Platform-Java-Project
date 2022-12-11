@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,29 +9,26 @@ import java.util.regex.Pattern;
 import javax.swing.*;
 
 public class SignIn extends JFrame {
-    final private Font mainFont = new Font("", Font.BOLD, 18);
+    final private Font mainFont = new Font("Ariel", Font.BOLD, 18);
 
     JTextField tfFirstName, tfLastName, tfEmail;
     JPasswordField pfpassword;
 
     public void Login() {
 
-        /*********** Form **********************/
-
-        JLabel LoginForm = new JLabel("Login form", SwingConstants.CENTER);
+        JLabel LoginForm = new JLabel("Login Form",SwingConstants.CENTER);
         LoginForm.setFont(mainFont);
-        LoginForm.setVisible(true);
         add(LoginForm);
 
-        JPanel lPanel = new JPanel();
-        lPanel.setBounds(100, 100, 350, 450);
-        lPanel.setBackground(Color.LIGHT_GRAY);
 
-        JLabel Email = new JLabel("Email");
-        Email.setFont(mainFont);
 
-        tfEmail = new JTextField();
-        tfEmail.setBounds(10, 50, 1000, 30);
+        /*********** Create a Login Form **********************/
+
+          JLabel Email = new JLabel("Email");
+          Email.setFont(mainFont);
+
+          tfEmail = new JTextField();
+          tfEmail.setFont(mainFont);
         tfEmail.addActionListener(new ActionListener() {
 
             @Override
@@ -48,10 +46,10 @@ public class SignIn extends JFrame {
 
         });
 
-        JLabel Password = new JLabel("Password");
-        Password.setFont(mainFont);
-        pfpassword = new JPasswordField();
-        pfpassword.setBounds(10, 90, 1000, 30);
+         JLabel Password = new JLabel("Password");
+         Password.setFont(mainFont);
+         pfpassword = new JPasswordField();
+         pfpassword.setFont(mainFont);
 
         pfpassword.addActionListener(new ActionListener() {
 
@@ -66,19 +64,24 @@ public class SignIn extends JFrame {
 
         });
 
-        /******** Button ********/
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new GridLayout(0, 1, 10, 10));
+        
+        formPanel.add(LoginForm);
+        formPanel.add(Email);
+        formPanel.add(tfEmail);
+        formPanel.add(Password);
+        formPanel.add(pfpassword);
+        add(formPanel, BorderLayout.NORTH);
+
+
+        /******** Create  Button ********/
         JButton Login = new JButton("Login");
-        Login.setBounds(100, 120, 100, 20);
+        Login.setFont(mainFont);
 
         JButton SignUp = new JButton("Sign Up");
-        SignUp.setBounds(100, 145, 100, 20);
-
-        lPanel.add(Email);
-        lPanel.add(tfEmail);
-        lPanel.add(Password);
-        lPanel.add(pfpassword);
-        lPanel.add(Login);
-        lPanel.add(SignUp);
+        SignUp.setFont(mainFont);
+       
 
         SignUp.addActionListener(new ActionListener() {
 
@@ -106,12 +109,19 @@ public class SignIn extends JFrame {
             }
 
         });
-        add(lPanel);
+
+        JPanel btnpanel = new JPanel();
+        btnpanel.setLayout(new GridLayout(1, 2, 10, 0));
+        btnpanel.add(Login);
+        btnpanel.add(SignUp);
+        add(btnpanel, BorderLayout.SOUTH);
+        
 
         setTitle("Login");
-        setSize(500, 600);
-        setLayout(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setSize(400, 500);
+        setMinimumSize(new Dimension(350,450));
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 

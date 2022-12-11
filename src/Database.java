@@ -1,10 +1,15 @@
 import java.sql.*;
+import java.util.*;
 
 import javax.swing.*;
 
 public class Database {
 
-    public String EmailId;
+    public String EmailId="u1604072@student.cuet.ac.bd";
+    public List<String> list = new ArrayList<String>();
+    
+
+
 
     public void SetData(String Fname, String Lname, String email, String pass) {
         try {
@@ -34,6 +39,10 @@ public class Database {
 
         }
     }
+
+
+
+
 
     public void varification(String email, String pass) {
         try {
@@ -67,10 +76,14 @@ public class Database {
         }
 
     }
+
+
+
+
     
     public void sendmail(String sendId,String receivedId,String body,String tag)
     {
-        try{
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             /* create connection */
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/romatoomail", "root", "1234");
@@ -93,8 +106,29 @@ public class Database {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Sendig failed");
 
-        }        
+        }
 
+    }
+    
+
+    public void receivemail()
+    {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/romatoomail", "root", "1234");
+            String que = "SELECT* FROM information WHERE SendId=u1604072@student.cuet.ac.bd";
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(que);
+            System.out.println("I'm here");
+            //PreparedStatement stmt = conn.prepareStatement(que);
+       } catch(Exception e)
+       {
+            JOptionPane.showMessageDialog(null, "Sendig failed");
+       }
+    }
+    public static void main(String[] args) {
+        Database obj = new Database();
+        obj.receivemail();
     }
 
 }

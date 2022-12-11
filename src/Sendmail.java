@@ -54,7 +54,7 @@ public class Sendmail extends JFrame {
 
 
         JTextArea textarea = new JTextArea("Message body");
-        textarea.setBounds(20,60,400,250);
+        textarea.setBounds(20, 60, 400, 200);
         add(textarea);
 
 
@@ -62,7 +62,7 @@ public class Sendmail extends JFrame {
 
         JButton send = new JButton("Send");
         send.setFont(mainFont);
-        send.setBounds(0, 350, 100, 20);
+        send.setBounds(0, 300, 100, 20);
 
         send.addActionListener(new ActionListener() {
 
@@ -85,8 +85,9 @@ public class Sendmail extends JFrame {
         add(send);
 
         setTitle("New Massage");
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setSize(400, 500);
+        setBounds(550, 250, 350, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
         setLayout(null);
         setVisible(true);
     }
