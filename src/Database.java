@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class Database {
 
-    public String EmailId="u1604072@student.cuet.ac.bd";
+    public String EmailId;
     public List<String> list = new ArrayList<String>();
     
 
@@ -35,13 +35,16 @@ public class Database {
             conn.close();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, " Account already exist");
+            JOptionPane.showMessageDialog(null, "Email id already has taken");
 
         }
     }
 
 
-
+    public String getemail() {
+        System.out.println(EmailId);
+        return this.EmailId;
+    }
 
 
     public void varification(String email, String pass) {
@@ -62,10 +65,10 @@ public class Database {
                 record = true;
             }
             if (record == true) {
-                EmailId = email;
+
                 NewsFeed nfobj = new NewsFeed();
                 nfobj.setVisible(true);
-                nfobj.Inbox();
+                nfobj.Inbox(email);
             } else {
                 JOptionPane.showMessageDialog(null, "Invalid Email or Password", "Warnig", JOptionPane.WARNING_MESSAGE);
             }
@@ -98,7 +101,7 @@ public class Database {
             stmt.setString(4, tag);
             stmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, " Account created Successfully");
+            JOptionPane.showMessageDialog(null, "Email was sent");
             Sendmail obj = new Sendmail();
             obj.setVisible(false);
             conn.close();
@@ -111,24 +114,50 @@ public class Database {
     }
     
 
-    public void receivemail()
+    public ArrayList<String> receivemail(String useremail)
     {
+        ArrayList<String> res = new ArrayList<>();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/romatoomail", "root", "1234");
-            String que = "SELECT* FROM information WHERE SendId=u1604072@student.cuet.ac.bd";
-            Statement stmt = conn.createStatement();
-            ResultSet result = stmt.executeQuery(que);
-            System.out.println("I'm here");
-            //PreparedStatement stmt = conn.prepareStatement(que);
-       } catch(Exception e)
-       {
-            JOptionPane.showMessageDialog(null, "Sendig failed");
-       }
+            String que = "SELECT* FROM information WHERE ReceivedId=?";
+            PreparedStatement stmt = conn.prepareStatement(que);
+
+            stmt.setString(1, useremail);
+            ResultSet result = stmt.executeQuery();
+
+            while (result.next() == true) {
+                res.add(result.getString(1));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        NewsFeed sobj = new NewsFeed();
+        sobj.showitem(res);
+        return res;
     }
-    public static void main(String[] args) {
-        Database obj = new Database();
-        obj.receivemail();
+
+    public ArrayList<String> sentmail(String useremail) {
+        ArrayList<String> res = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/romatoomail", "root", "1234");
+            String que = "SELECT* FROM information WHERE SendId=?";
+            PreparedStatement stmt = conn.prepareStatement(que);
+            stmt.setString(1, useremail);
+            ResultSet result = stmt.executeQuery();
+            while (result.next() == true) {
+                 System.out.println(result.getString(2));
+                res.add(result.getString(2));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        return res;
+
     }
 
 }

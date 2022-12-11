@@ -19,6 +19,7 @@ public class Signup extends JFrame {
 
         SignIn Hobj = new SignIn();
         Hobj.setVisible(false);
+
         JLabel RgForm = new JLabel("Registration Form", SwingConstants.CENTER);
         RgForm.setFont(mainFont);
         add(RgForm);
@@ -48,7 +49,7 @@ public class Signup extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String str = tfFirstName.getText();
-                if (!str.matches("[a-z jA-Z]+")) {
+                if (!str.matches("[a-z A-Z]+")) {
                     JOptionPane.showMessageDialog(null, "Name contain only english latter", "Warning",
                             JOptionPane.WARNING_MESSAGE);
                 }
@@ -142,7 +143,7 @@ public class Signup extends JFrame {
 
         });
 
-        
+
         JPanel btnpanel = new JPanel();
         btnpanel.setLayout(new GridLayout(1, 2, 10, 0));
         btnpanel.add(signup);

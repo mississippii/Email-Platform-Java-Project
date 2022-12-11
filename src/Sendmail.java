@@ -10,7 +10,7 @@ public class Sendmail extends JFrame {
 
     final private Font mainFont = new Font("", Font.BOLD, 18);
 
-    public void MessageBody() {
+    public void MessageBody(String desieremail) {
 
 
 
@@ -69,9 +69,9 @@ public class Sendmail extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Database obj=new Database();
-                
-                String sendId =obj.EmailId;
+
+                String sendId = desieremail;
+                System.out.println(sendId);
                 String receivedId = jtrecipient.getText();
                 String body = textarea.getText();
                 String tag = "Praimary";
@@ -92,11 +92,5 @@ public class Sendmail extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-
-        Sendmail ob = new Sendmail();
-        ob.MessageBody();
-
-    }
 
 }

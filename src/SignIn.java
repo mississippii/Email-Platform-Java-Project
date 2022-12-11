@@ -105,6 +105,9 @@ public class SignIn extends JFrame {
 
                 Database Dob = new Database();
                 Dob.varification(Lemail, Lpass);
+                Database dbobj = new Database();
+                dbobj.receivemail(Lemail);
+                // row = dbobj.receivemail(email);
                 setVisible(false);
             }
 
