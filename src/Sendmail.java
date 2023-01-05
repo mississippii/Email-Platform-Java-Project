@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale.Category;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
