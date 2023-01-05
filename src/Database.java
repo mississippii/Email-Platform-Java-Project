@@ -126,15 +126,17 @@ public class Database {
             stmt.setString(1, useremail);
             ResultSet result = stmt.executeQuery();
 
-            while (result.next() == true) {
+            while (result.next()) {
+                // System.out.println("User"+useremail);
+                System.out.println("receive : " + result.getString(1));
                 res.add(result.getString(1));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
-        NewsFeed sobj = new NewsFeed();
-        sobj.showitem(res);
+        // NewsFeed sobj = new NewsFeed();
+        // sobj.showitem(res);
         return res;
     }
 
@@ -148,8 +150,31 @@ public class Database {
             stmt.setString(1, useremail);
             ResultSet result = stmt.executeQuery();
             while (result.next() == true) {
-                 System.out.println(result.getString(2));
+                //System.out.println("Sent : " + result.getString(2));
                 res.add(result.getString(2));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        return res;
+
+    }
+
+    public ArrayList<String> categories(String mailtag, String usermail) {
+        ArrayList<String> res = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/romatoomail", "root", "1234");
+            String que = "SELECT* FROM information WHERE Tag=? AND ReceivedId=?";
+            PreparedStatement stmt = conn.prepareStatement(que);
+            stmt.setString(1, mailtag);
+            stmt.setString(2, usermail);
+            ResultSet result = stmt.executeQuery();
+            while (result.next() == true) {
+                System.out.println(result.getString(1));
+                res.add(result.getString(1));
             }
 
         } catch (Exception e) {

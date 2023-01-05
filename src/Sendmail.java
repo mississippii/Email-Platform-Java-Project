@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 
 public class Sendmail extends JFrame {
 
+    String selecttag;
+
     final private Font mainFont = new Font("", Font.BOLD, 18);
 
     public void MessageBody(String desieremail) {
@@ -51,6 +53,13 @@ public class Sendmail extends JFrame {
         Categories.setBounds(10, 40, 100, 20);
         add(Categories);
 
+        Categories.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selecttag = (String) Categories.getSelectedItem();
+            }
+        });
 
 
         JTextArea textarea = new JTextArea("Message body");
@@ -74,10 +83,11 @@ public class Sendmail extends JFrame {
                 System.out.println(sendId);
                 String receivedId = jtrecipient.getText();
                 String body = textarea.getText();
-                String tag = "Praimary";
+                String tag = selecttag;
 
                 Database dbobj = new Database();
                 dbobj.sendmail(sendId, receivedId, body, tag);
+                setVisible(false);
             }
             
         });
